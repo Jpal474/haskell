@@ -1,0 +1,86 @@
+--sumar los elementos que están e posición impar
+
+sumaPosicionesImpares lista = sumaPosImpar lista 1
+
+sumaPosImpar [] _ = 0
+sumaPosImpar (x:xs) c = if (odd c) then x + (sumaPosImpar xs (c+1) )
+				else (sumaPosImpar xs (c+1))
+
+--dada una lista, en las posiciones multiplos de n
+--poner un 1 en vez del valor que ahí estuviera
+
+modificaLista lista n = modificarLista lista 1 n
+
+modificarLista []     pos n = []
+modificarLista (x:xs) pos n = if ((mod pos n) == 0) 
+					    then 1:(modificarLista xs (pos+1) n)
+					    else x:(modificarLista xs (pos+1) n)
+
+--borrar un valor de una lista
+
+borrarVal [] v = []
+borrarVal (x:xs) v = if (v==x) then borrarVal xs v
+			   else x:(borrarVal xs v)
+
+--Dada una lista de tuplas (alumno-calificacion)
+--eliminar de la lista a los estudiantes qhe tengan una calificacion menor a n
+--a -> alumno, c -> calificacion
+
+borraNoAprobados [] n = []
+borraNoAprobados ((a,c):xs) n = if (c<n)
+						then borraNoAprobados xs n
+					  else (a,c):(borraNoAprobados xs n)
+
+--Encontrar el numero mayor de una lista
+--v -> numero mayor
+
+mayor [x] = x
+mayor (x:xs) = findMax xs x
+
+findMax [] v = v
+findMax (x:xs) v = if (x>v) then findMax xs x
+			 else findMax xs v
+
+--TAREA: Encuentre el mayor de una lista de listas sin funciones predefinidas 
+
+--numeros = [[1,2,3],[5,9,6],[5,8,3]] 
+
+mayorListaDeListas ls = mayor (procesaListaDeListas ls)
+procesaListaDeListas [] = []
+procesaListaDeListas (l:ls) = (mayor l) : (procesaListaDeListas ls)
+
+
+--ORDEN SUPERIOR (map, filter)
+--Tratar a las funciones como un elemento trivial
+-- map cuadrado [1..10]  -->  [1,4,9,16,25,36,49,64,81,100]
+
+cua [] = []
+cua (x:xs) = (x) : (cua xs)
+
+--Uso de funciones anonimas
+--Son funciones que no tienen nombre
+--Se declaran/usan en línea con alguna expresión
+--También llamadas extresiones LAMBDA
+-- \x->x+x	Es una expresion lambda que recie un argumento
+
+--Dada una lista de calificaciones, filtrar para que solo queden las calificaciones validas aprobatorias
+
+calVal x = if ((x>69) && (x<101)) then True
+	     else False
+
+
+--filter (\x->(if (even x) then True else False)) [90,65,110]
+
+
+--LAZYNESS
+--Característica de la programación que consiste en que una función consume solo los argumentos que requiere
+
+from x = x : (from (x+1)) --si x = 3 -> 3,4,5,6,...
+ejemplo = take 5 (from 4)
+
+--cuando hay una función infinita, solo toma los valores que requiere su contexto 
+--funcion -> take 5 [100,98..0] devuelve [100,98,96,94,92]
+
+--TAREA: Dado un parrafo de texto, indique cual es la palabra más larga, USE ORDEN SUPERIOR -> Función WORDS
+
+parrafo = "hoy platique con mi gallo y me dijo tristemente, para que me cuidaste tanto si hoy me mandas a la muerte"

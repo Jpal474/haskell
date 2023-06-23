@@ -1,0 +1,70 @@
+import Data.Char
+import Data.List
+import Data.Ord
+
+text = "LA educacion es para los niños, aprendizaje" --Texto a categorizar--
+
+--Textos donde se sacan las palabras claves--
+text_lit = "La literatura es una de las Bellas Artes y una de las más antiguas formas de expresión artística, caracterizada, según el Diccionario de la Real Academia Española, por la expresión verbal. Es decir que alcanza sus fines estéticos mediante la pal, tanto oral como mayormente escrita. Sin embargo, nunca resulta fácil justificar qué cosa es y qué cosa no es literatura, ya que éste se trata de un concepto construido históricamente (es decir, que se escribió literatura antes de que la idea de literatura existiera). Así, fue revisado y redefinido numerosas veces a lo largo del tiempo, y existen múltiples posibles definiciones. Uno de los rasgos singulares de la literatura es su uso del lenguaje, que a menudo se denomina la lengua literaria, y que se diferencia del uso ordinario o cotidiano. Su uso particular del lenguaje persigue la belleza y la reflexión sobre sí mismo, no sólo mediante el empleo de tropos y figuras retóricas, sino también de un sentido particular del ritmo y el sentido. La Odisea de Homero, seguida de La Cabaña del Tío Tom, ejemplos de las distintas formas en las que los encuestados interpretan una historia que modela al mundo. Mientras que la epopeya griega sobrevivió e inspiró generaciones de relatos, la novela de 1852 de Harriet Beecher Stow fue alabada por ser la primera novela política leída ampliamente en Estados Unidos. Frankenstein, 1984 y Things Fall Apart (Todo Se Desmorona) redondean los cinco primeros lugares, entre los cuales encontramos a dos autoras. En total, 23 de los 100 autores principales fueron mujeres. Los autores más populares de las 100 mejores historias fueron Shakespeare, Virginia Wolf y Franz Kafka, con tres historias cada uno. Entre los clásicos incluidos en la lista se encuentran algunos textos menos conocidos a nivel mundial: The Jungle (La Jungla) de Upton Sinclair, que condujo directamente a la introducción de nuevas leyes federales sobre la seguridad alimentaria en Estados Unidos, y Toba Tek Singh, de Saadat Hasan Manto, elogiada como una historia corta clásica que traduce el trauma de la partición a través del intercambio de lunáticos a través de la frontera de India y Pakistán. No es una lista definitiva. Se trata solo de un punto de partida, con el objetivo de provocar una conversación sobre por qué algunas historias perduran y siguen resonando siglos y milenios después de su creación."
+text_gastr = "La gastronomía es el estudio del nexo que tienen los seres humanos con su alimentación en relación a su medio ambiente o entorno. Su nombre proviene del griego gastrós, que significa estómago o vientre y nomos que significa ley. Muchas veces asociamos la gastronomía únicamente con el arte culinario y las características en torno a un restaurante, pero eso no es correcto porque esta área profesional y cultural no se limita exclusivamente a la preparación de platos en sí. Un profesional de la gastronomía posee habilidades de un cocinero y entiende muchas áreas más, como la administración, por ejemplo. Es decir, la gastronomía estudia los diversos componentes que integran la relación con los alimentos desde el punto de vista cultural y un cocinero es el encargado de elaborar platillos y organizar una cocina. La diversidad es la característica esencial de la cocina mexicana, y es la comida regional uno de sus aspectos fundamentales. Cada estado mexicano y región poseen sus propias recetas y tradiciones culinarias.4​ Ejemplos de comidas regionales son platillos como el caldillo duranguense (Durango), cochinita pibil (yucateca), el mole oaxaqueño, el mole poblano y el chile en nogada (Puebla), los múltiples tipos de pozole, el cabrito (coahuilense y neoleonense), el pan de cazón campechano, el churipo y las corundas (región purépecha) o el menudo (jalisciense, michoacano, sinaloense, sonorense y chihuahuense). Ciertamente, hay creaciones gastronómicas que surgieron localmente y que por su calidad, aceptación y difusión se han vuelto emblemáticas de la cocina mexicana en lo general. En los mercados de cada sitio se muestra esta diversidad, y la actividad por las mañanas comienza con típicos desayunos como molletes dulces o salados, chilaquiles y/o huevos al gusto y bebidas con leche, café, chocolate y jugos, hasta platillos únicos de cada región."
+text_edu = "La educación es el proceso de facilitar el aprendizaje o la adquisición de conocimientos, así como habilidades, valores, creencias y hábitos. El proceso educativo se da a través de la investigación, el debate, la narración de cuentos, la discusión, la enseñanza, el ejemplo y la formación en general. La educación no solo se produce a través de la pal, pues además está presente en todas nuestras acciones, sentimientos y actitudes. Generalmente, la educación se lleva a cabo bajo la dirección de las figuras de autoridad: los padres, los educadores (profesores o maestros),1​2​ pero los estudiantes también pueden educarse a sí mismos en un proceso llamado aprendizaje autodidacta.3​ El conjunto de personas que tienen un protagonismo activo en la educación reciben el nombre de Comunidad Educativa. Cualquier experiencia que tenga un efecto formativo en la forma en que uno piensa, siente o actúa puede considerarse educativa. La educación puede tener lugar en contextos formales o informales. La educación formal está comúnmente dividida en varias etapas, como Educación preescolar, escuela primaria, escuela secundaria y luego la universidad o instituto. Al concluir la formación se expide un comprobante o certificado de estudios, que permite acceder a un nivel más avanzado. Existe una educación conocida como no formal (no escolarizada) por la que, a diferencia de la formal, no se recibe un certificado que permita acceder a un nuevo nivel educativo al terminar la formación; normalmente, los lugares que ofrecen la educación no formal, son los centros comunitarios, instituciones privadas, organizaciones civiles o el Estado."
+
+--Palabras vacías que no importan en el texto--
+stopWords = ["hay","además","cabe","casi","como","con","conseguimos","conseguir","consigo","consigue","consiguen","consigues","contigo","conmigo","cierto","cierta","ciertas","ciertos","cual","cuales","cualquier","cualquiera","a","aca","ahi","al","alla","allá","acá","alli","algo","algun","algún","alguna","alguno","algunas","algunos","ajeno","ajena","ajenas","ajenos","ambos","ante","antes","aquel","aquella","aquello","aquellos","aquellas","aqui","aquí","arriba","asi","así","atras","atrás","aun","aún","aunque","bien","bajo","bastante","cada","cuando","cuanto","cuanta","cuantos","cuantas","de","dejar","demasiado","demasiada","demasiados","demasiadas","del","demas","dentro","desde","debajo","donde","dos","e","el","él","ella","ello","ellas","ellos","en","encima","entonces","entre","era","eras","eramos","eran","eres","estaba","estamos","estan","estar","estoy","eres","es","esa","ese","eso","esas","esos","esta","estas","este","esto","estos","etc","embargo","fue","fueron","fui","fuimos","hace","haces","hacemos","hacen","hacer","hacia","hago","ha","hasta","incluso","intenta","intentamos","intentan","intentar","intento","ir","jamas","jamás","junto","juntos","mas","menos","mio","mios","misma","mismo","mismas","mismos","la","lo","las","los","me","mi","mis","mia","mias","mientras","muy","modo","mucha", "muchas","mucho","muchos","nada","ningun","ningún","ninguna","ninguno","ningunos","ningunas","no","nos","nunca","ni","nosotras","nosotros","nuestra","nuestro","nuestras","nuestros","o","otra","otro","otras","otros","para","pero","pues","que","que","si","si","siempre","siendo","sin","sino","sobre","su","sus","te","tu","tus","u","un","una","uno","unas","unos","usted","ustedes","y","ya","yo","parecer","pero","poca","poco","pocas","pocos","podemos","podria","podrias","podriamos","podrian","por","porque","puede","pueden","puedo","pues","querer","quien","quienes","quiza","quizas","sabe","sabes","saben","sabemos","se","segun","ser","solamente","solo","solo","somos","soy","su","sus","suya","suyo","suyas","suyos","tal","tales","tambien","tampoco","tan","tanta","tanto","tantas","tantos","tenemos","tener","tengo","tiene","tienen","toda","todo","todas","todos","tras","tu","tus","tuya","tuyo","tuyas","tuyos","usamos","usan","usar","uso","va","van","vamos","varias","varios","vaya","voy"]
+
+--Definición del método, recibe una string y lo regresa como [String]
+cleanText :: String -> [String]
+cleanText texto =  let
+                letr = [c | c <- texto , isAlpha c || isSpace c]
+                pals = words letr
+                keys = [w | w <- pals, w `notElem` stopWords]
+                minus = map (map toLower) keys
+                in minus
+
+cleanTextNum texto = let 
+		letr = [c | c <- texto , isAlpha c || isSpace c]
+		pals = words letr
+		in pals
+        
+--Cuenta el total de palabras del texto limpio
+totalPal = genericLength(cleanTextNum text) 
+
+
+--Tomamos los primeros 30 datos ordenas de forma mayor a menor de la frecuencia usando el texto limpio
+lista_literatura =  take 30 ((frec (cleanText text_lit)))
+lista_gastronomia =  take 30 ((frec (cleanText text_gastr)))
+lista_educacion =  take 30 ((frec (cleanText text_edu)))
+
+--Definición del método frecuencia, regresa una lista con el número seguido de la palabra
+frec :: Ord a => [a] -> [(Int,a)]
+frec xs = [(1 + length xs, x) | (x:xs) <- group (sort xs)]
+
+--Sacamos el valor del texto acorde a cada categoría, en caso de que sea un 0 usamos un 0.1
+valor [] = 1
+valor (x:xs) = if (x==0)
+                    then ((realToFrac 0.1/realToFrac totalPal) * (valor xs))
+                    else ((realToFrac x/realToFrac totalPal) * (valor xs))
+
+
+--Sacamos el valor absoluto de la aplicación de logaritmo al resultado de la función valor
+valEduc = abs(log(valor([x | (x,pal) <- lista_educacion, (elem pal (cleanText text))]))) --abs saca el valor absoluto de un numero-- 
+valLit = abs(log(valor([x | (x,pal) <- lista_literatura, (elem pal (cleanText text))])))
+valGast = abs(log(valor([x | (x,pal) <- lista_gastronomia, (elem pal (cleanText text))])))
+
+
+--Método para iniciar el programa, manda llamar a la función donde se imprime el resultado
+categorizarTexto text = funCat valEduc valLit valGast
+
+funCat educacion literatura gastronomia = if (educacion > literatura && educacion/=0) --Si educacion es mayor a literatura y educación es diferente de 0
+                                                then (
+                                                    if (educacion > gastronomia && educacion/=0) --Comparamos con gastronomía, si resulta ser mayor, el texto estará hablando sobre educación
+                                                        then "El texto habla de Educacion" 
+                                                        else "El texto habla de Gastronomia")--Caso contrario, será gastronimía
+                                                else (if (literatura > gastronomia && literatura/=0)  --Si eduación no es mayor a gastronomía, entonves lo compara con literatura
+                                                        then "El texto habla de Literatura" -- Si literatura es mayor, el texto es sobre literatura
+                                                        else "El texto habla de Gastronomia")--Sino, el texto es sobre Gastronomía
+
+
+
+
+
